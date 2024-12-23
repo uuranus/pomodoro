@@ -1,0 +1,90 @@
+:root {
+    --vh: 100%;
+    background-color: #f9f9f9;
+  }
+  
+  .pomodoro-container {
+       width: 100vw; 
+      height: 100vh; 
+      margin: 50px auto;
+      padding: 20px;
+      border: 2px solid black;
+      box-sizing: border-box;
+      position: relative;
+      text-align: center;
+      font-family: "Arial", sans-serif;
+    }
+    
+    .title {
+      /* font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      position: relative; */
+      display: flex;
+        align-items: center;
+        text-align: center;
+        color: #333;
+    }
+    
+    .title::before,
+    .title::after {
+      /* content: "";
+      position: absolute;
+      top: 50%;
+      width: 100px;
+      height: 2px;
+      background: black;
+      transform: translateY(-50%); */
+      content: "";
+        flex: 1;
+        border-top: 1px solid #333;
+        margin: 0 10px;
+    }
+    
+    .timer {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    
+    .description {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    
+    .phases {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    
+    .phases span {
+      margin: 0 5px;
+    }
+    
+    .phases .active {
+      color: red;
+      font-weight: bold;
+    }
+    
+    /* Outer border with gaps around the title */
+    .pomodoro-container::before,
+    .pomodoro-container::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 2px solid black;
+      pointer-events: none;
+    }
+    
+    .pomodoro-container::before {
+      border-bottom: none;
+    }
+    
+    .pomodoro-container::after {
+      border-top: none;
+    }

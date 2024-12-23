@@ -1,0 +1,66 @@
+import React, { useState, useEffect, useRef } from "react";
+
+import styled from "styled-components";
+
+function Timer({ mode, initialSeconds, onTimerEnd }) {
+
+    const [count, setCount] = useState(initialSeconds);
+
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+      };
+
+    useEffect(() => {
+        const updateTimer = setInterval(() => {
+            if(count <= 0) return;
+            setCount(c => {
+                if (c <= 0) {
+                    clearInterval(updateTimer);
+                    onTimerEnd();
+                    return 0;
+                  }
+                
+                return  c - 1;
+            });
+        }, 1000);
+
+        return () => {
+            clearInterval(updateTimer);
+        };
+
+    }, []);
+
+    return (
+        <React.Fragment>
+            <CurrentTime>{mode} Time</CurrentTime>
+            <TimeCount>{formatTime(count)}</TimeCount>
+        
+        </React.Fragment>
+    );
+};
+
+export default Timer;
+
+const CurrentTime = styled.div`
+  font-size: 32px;
+  color: black;
+  font-family: Playfair Display, serif;
+  margin-bottom: 10px;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  z-index: 5;
+`;
+
+const TimeCount = styled.div`
+  font-size: 128px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  font-style: italic;
+  font-family: Lora , serif;
+  border-top: 1px solid black;
+  flex: 1;
+`;
