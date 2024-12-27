@@ -1,61 +1,38 @@
 import './App.css';
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 
 import Timer from './Timer';
 import Phases from './Phases';
+import StateForm from './Form';
 
 function App() {
 
-  const modes = ["Focus", "Rest", "Focus", "Rest", "Focus", "Rest"];
-  const times = [25,10,25,10,25,10,25,40];
+  const modes = ["Focus", "Rest", "Focus", "Rest", "Focus", "Rest", "Focus", "Long Rest"];
+  const times = [10, 5, 10, 5, 10, 5, 10, 15];
 
   const [currentMode, setCurrentMode] = useState(0);
 
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth, // 화면 너비
-    height: window.innerHeight, // 화면 높이
-  });
-
   const handleTimerEnd = () => {
-    setCurrentMode(m => m+1); // 모드 전환
-  };
-
-  const updateDimensions = () => {
-    const width =
-      window.innerWidth - (window.innerWidth - document.documentElement.clientWidth) - 80;
-    const height =
-     window.innerHeight -
-      (window.innerHeight - document.documentElement.clientHeight) - 40;
-
-    setDimensions({
-      width: width,
-      height: height,
+    setCurrentMode((prevMode) => {
+      if (prevMode + 1 < modes.length) {
+        return prevMode + 1; // 다음 모드로 전환
+      } else {
+        return prevMode; // 처음으로 돌아가거나 특정 종료 동작을 수행
+      }
     });
   };
 
-  // 컴포넌트 마운트 시 이벤트 리스너 등록
-  useEffect(() => {
-
-    updateDimensions();
-
-    window.addEventListener("resize", updateDimensions); // 화면 크기 변경 시 실행
-
-    return () => {
-      window.removeEventListener("resize", updateDimensions); // 리스너 제거
-    };
-
-  });
-  
   return (
-    <PomodoroContainer width = {dimensions.width} height={dimensions.height}>
-      <TitleLine width = {dimensions.width} >Pomodoro</TitleLine>
-      <Title width = {dimensions.width}>Pomodoro</Title>
-      <Frame width = {dimensions.width} height = {dimensions.height} >
-        <ThinFrame>  
-          <Timer mode = {modes[currentMode]} initialSeconds={times[currentMode] } onTimerEnd = {handleTimerEnd}/>
-          <Phases mode = {currentMode}/>
+    <PomodoroContainer>
+      <TitleLine >Pomodoro</TitleLine>
+      <Title>Pomodoro</Title>
+      <Frame>
+        <ThinFrame>
+          <StateForm/>
+          {/* <Timer mode={modes[currentMode]} initialSeconds={times[currentMode]} onTimerEnd={handleTimerEnd} />
+          <Phases mode={currentMode} /> */}
         </ThinFrame>
       </Frame>
     </PomodoroContainer>
@@ -65,20 +42,18 @@ function App() {
 export default App;
 
 const PomodoroContainer = styled.div`
-  width: ${(props) => props.width}px;
-  height: ${(props) => props.height}px;
-  margin: 20px 40px 20px 40px;
+  width: calc(100vw - var(--scrollbar-width));
+  height: 100vh;
   background-color: #f9f9f9;
   display: flex;
   justify-content: center;
 `;
 
 const TitleLine = styled.h1`
-  width: ${(props) => props.width}px;
+  width: calc(100% - 80px);
   font-size: 96px;
   font-weight: 400;
   font-family: Playfair Display, serif;
-  color: #f9f9f9;
   text-align: center;
   position: absolute;
   top: 0px;
@@ -104,7 +79,7 @@ const TitleLine = styled.h1`
     width: calc(100% - 24px - 20px);
     height: calc(50% + 12px + 10px); 
     top: 0px;
-    left: 22px;
+    left: calc(12px + 10px);
     border-bottom: 1px solid black;
     z-index: 1;
   }
@@ -118,16 +93,16 @@ const Title = styled.h1`
   background-color: #f9f9f9;
   position: absolute;
   top: 0px;
-  margin: 20px;
-  padding: 0px 20px 0px 20px;
+  padding: 20px;
+  margin: 0px 20px 0px 20px;
   z-index: 3;
 `;
 
 const Frame = styled.div`
-  width: ${(props) => props.width}px;
-  height: ${(props) => props.height - 40}px;
+   width: calc(100% - 80px - 24px);
+  height: calc(100% - 80px);
   border: 12px solid black;
-  margin: 20px 0px 20px 0px;
+  margin: 40px 40px 20px 40px;
 `;
 
 const ThinFrame = styled.div`

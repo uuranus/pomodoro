@@ -3,42 +3,52 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 function Timer({ mode, initialSeconds, onTimerEnd }) {
+  const [count, setCount] = useState(initialSeconds);
+  const [isInitialized, setIsInitialized] = useState(false); // 초기화 상태 관리
 
-    const [count, setCount] = useState(initialSeconds);
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  };
 
-    const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-      };
+  const handleTimer = () => {
+    if (!isInitialized) return; // 초기화되지 않았다면 호출 방지
+    
+    onTimerEnd(); // Notify parent that timer has ended
+  };
+  
+  useEffect(() => {
+    setCount(initialSeconds); // `initialSeconds`가 변경될 때 `count`를 초기화
+    setIsInitialized(true); // 초기화 완료 표시
+  }, [initialSeconds, isInitialized]);
 
-    useEffect(() => {
-        const updateTimer = setInterval(() => {
-            if(count <= 0) return;
-            setCount(c => {
-                if (c <= 0) {
-                    clearInterval(updateTimer);
-                    onTimerEnd();
-                    return 0;
-                  }
-                
-                return  c - 1;
-            });
-        }, 1000);
+  useEffect(() => {
+    const updateTimer = setInterval(() => {
+    setCount(c => {
+      if(c <= 0) {
+        clearInterval(updateTimer); 
+        handleTimer();
+        return 0;
+      }
+      else {
+        return c-1; 
+      }
+    });
+    }, 1000);
 
-        return () => {
-            clearInterval(updateTimer);
-        };
+    return () => {
+      clearInterval(updateTimer);
+    };
+  }, [initialSeconds, isInitialized]);
 
-    }, []);
+  return (
+    <React.Fragment>
+      <CurrentTime>{mode} Time</CurrentTime>
+      <TimeCount>{formatTime(count)}</TimeCount>
 
-    return (
-        <React.Fragment>
-            <CurrentTime>{mode} Time</CurrentTime>
-            <TimeCount>{formatTime(count)}</TimeCount>
-        
-        </React.Fragment>
-    );
+    </React.Fragment>
+  );
 };
 
 export default Timer;
