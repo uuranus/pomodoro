@@ -44,17 +44,16 @@ function Timer({ mode, initialSeconds, onTimerEnd }) {
 
   return (
     <React.Fragment>
-      <CurrentTime>{mode} Time</CurrentTime>
+      <CurrentMode>{mode} Time</CurrentMode>
       <TimeCount>{formatTime(count)}</TimeCount>
-
     </React.Fragment>
   );
 };
 
 export default Timer;
 
-const CurrentTime = styled.div`
-  font-size: 32px;
+const CurrentMode = styled.div`
+  font-size: 48px;
   color: black;
   font-family: Playfair Display, serif;
   margin-bottom: 10px;

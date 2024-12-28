@@ -10,9 +10,15 @@ import StateForm from './Form';
 function App() {
 
   const modes = ["Focus", "Rest", "Focus", "Rest", "Focus", "Rest", "Focus", "Long Rest"];
-  const times = [10, 5, 10, 5, 10, 5, 10, 15];
+  const [timeSettings, setTimeSettings] = useState([
+    { label: "Focus", value: 10, unit: "min" },
+    { label: "Rest", value: 5, unit: "min" },
+    { label: "Long Rest", value: 15, unit: "min" },
+  ]);
 
   const [currentMode, setCurrentMode] = useState(0);
+
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   const handleTimerEnd = () => {
     setCurrentMode((prevMode) => {
@@ -24,15 +30,31 @@ function App() {
     });
   };
 
+  const startTimer = (timeSettings) => {
+    console.log("Timer started with settings:", timeSettings);
+    // 타이머 로직 시작
+    setTimeSettings(timeSettings); // 새로운 시간 설정 저장
+    setIsTimerRunning(true); // 타이머 실행 상태로 변경
+  };
+
   return (
     <PomodoroContainer>
       <TitleLine >Pomodoro</TitleLine>
       <Title>Pomodoro</Title>
       <Frame>
         <ThinFrame>
-          <StateForm/>
-          {/* <Timer mode={modes[currentMode]} initialSeconds={times[currentMode]} onTimerEnd={handleTimerEnd} />
-          <Phases mode={currentMode} /> */}
+          {isTimerRunning ? (
+            <React.Fragment>
+              <Timer
+                mode={modes[currentMode]}
+                initialSeconds={timeSettings.find((setting) => setting.label === modes[currentMode])?.value ?? 0}
+                onTimerEnd={handleTimerEnd}
+              />
+              <Phases mode={currentMode} />
+            </React.Fragment>
+          ) : (
+            <StateForm onStartTimer={startTimer} />
+          )}
         </ThinFrame>
       </Frame>
     </PomodoroContainer>
