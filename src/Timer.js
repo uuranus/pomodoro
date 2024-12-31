@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 function Timer({ mode, initialSeconds, onTimerEnd }) {
   const [count, setCount] = useState(initialSeconds);
-  const [isInitialized, setIsInitialized] = useState(false); // 초기화 상태 관리
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -13,28 +13,28 @@ function Timer({ mode, initialSeconds, onTimerEnd }) {
   };
 
   const handleTimer = () => {
-    if (!isInitialized) return; // 초기화되지 않았다면 호출 방지
-    
-    onTimerEnd(); // Notify parent that timer has ended
+    if (!isInitialized) return;
+
+    onTimerEnd();
   };
-  
+
   useEffect(() => {
-    setCount(initialSeconds); // `initialSeconds`가 변경될 때 `count`를 초기화
-    setIsInitialized(true); // 초기화 완료 표시
+    setCount(initialSeconds);
+    setIsInitialized(true);
   }, [initialSeconds, isInitialized]);
 
   useEffect(() => {
     const updateTimer = setInterval(() => {
-    setCount(c => {
-      if(c <= 0) {
-        clearInterval(updateTimer); 
-        handleTimer();
-        return 0;
-      }
-      else {
-        return c-1; 
-      }
-    });
+      setCount(c => {
+        if (c <= 0) {
+          clearInterval(updateTimer);
+          handleTimer();
+          return 0;
+        }
+        else {
+          return c - 1;
+        }
+      });
     }, 1000);
 
     return () => {
@@ -43,33 +43,54 @@ function Timer({ mode, initialSeconds, onTimerEnd }) {
   }, [initialSeconds, isInitialized]);
 
   return (
-    <React.Fragment>
+    <TimeCountContainer>
       <CurrentMode>{mode} Time</CurrentMode>
       <TimeCount>{formatTime(count)}</TimeCount>
-    </React.Fragment>
+    </TimeCountContainer>
+
   );
 };
 
 export default Timer;
+
+const TimeCountContainer = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  @media (max-width: 775px) {
+    flex: 1;
+  }
+`;
 
 const CurrentMode = styled.div`
   font-size: 48px;
   color: black;
   font-family: Playfair Display, serif;
   margin-bottom: 10px;
-  flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
   z-index: 5;
+
+  @media (max-width: 775px) {
+    font-size: 32px;
+  }
 `;
 
 const TimeCount = styled.div`
   font-size: 128px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
-  font-style: italic;
   font-family: Lora , serif;
   border-top: 1px solid black;
-  flex: 1;
+  text-align: baseline;
+
+
+  @media (max-width: 775px) {
+    font-size: 80px;
+  }
 `;
+

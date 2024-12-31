@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-export default function StateForm({onStartTimer}) {
-  const [timeSettings, setTimeSettings] = useState([
-    { label: "Focus", value: 10, unit: "min" },
-    { label: "Rest", value: 5, unit: "min" },
-    { label: "Long Rest", value: 15, unit: "min" },
-  ]);
+export default function TimerForm({ preTimeSettings, onStartTimer}) {
+  const [timeSettings, setTimeSettings] = useState([...preTimeSettings]);
 
   const handleInputChange = (index, newValue) => {
     const updatedSettings = timeSettings.map((time, i) =>
@@ -54,29 +50,47 @@ export default function StateForm({onStartTimer}) {
 }
 
 const FormContainer = styled.div`
-  margin: 0 auto;
+  width: 40%;
+  margin: 120px 40px 120px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1135px) {
+    width: 60%;
+  }
+
+  @media (max-width: 775px) {
+    width: 80%;
+  }
 `;
 
 const TimeTable = styled.div`
   flex: 1;
+  width: 100%;
 `;
 
 const TimeRow = styled.div`
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  gap: 45px;
 `;
 
 const TimeLabel = styled.span`
   font-size: 36px;
   font-weight: 400;
   font-family: Playfair Display, serif;
+
+  @media (max-width: 1135px) {
+    font-size: 32px;
+  }
+
+  @media (max-width: 775px) {
+    font-size: 24px;
+  }
 `;
 
 const TimeValue = styled.div`
@@ -84,6 +98,7 @@ const TimeValue = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 15px;
+
 `;
 
 const TimeInput = styled.input`
@@ -96,9 +111,16 @@ const TimeInput = styled.input`
   border: none;
   background: none;
   appearance: textfield; 
-
   -moz-appearance: none;
   -webkit-appearance: none;
+
+  @media (max-width: 1135px) {
+    font-size: 40px;
+  }
+
+  @media (max-width: 775px) {
+    font-size: 32px;
+  }
 
   &:focus {
     outline: none;
@@ -120,6 +142,15 @@ const TimeUnit = styled.span`
   font-size: 36px;
   font-weight: 400;
   font-family: Playfair Display, serif;
+
+  @media (max-width: 1135px) {
+    font-size: 32px;
+  }
+
+  @media (max-width: 775px) {
+    font-size: 24px;
+  }
+
 `;
 
 const Separator = styled.hr`
@@ -139,10 +170,18 @@ const StartButton = styled.button`
   padding: 10px 20px;
   border: 1px solid black;
   background-color: #fff;
-  font-size: 36px;
+  font-size: 32px;
   font-family: Playfair Display, serif;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+
+  @media (max-width: 1135px) {
+    font-size: 32px;
+  }
+
+  @media (max-width: 775px) {
+    font-size: 24px;
+  }
 
   &:hover {
     background-color: black;

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import Timer from './Timer';
 import Phases from './Phases';
-import StateForm from './Form';
+import TimerForm from './Form';
 
 function App() {
 
@@ -25,14 +25,15 @@ function App() {
       if (prevMode + 1 < modes.length) {
         return prevMode + 1; // 다음 모드로 전환
       } else {
-        return prevMode; // 처음으로 돌아가거나 특정 종료 동작을 수행
+        console.log("Timer started with settings:", timeSettings[0]);
+        // 타이머 로직 시작
+        setIsTimerRunning(false);
+        return 0; // 처음으로 돌아가거나 특정 종료 동작을 수행
       }
     });
   };
 
   const startTimer = (timeSettings) => {
-    console.log("Timer started with settings:", timeSettings);
-    // 타이머 로직 시작
     setTimeSettings(timeSettings); // 새로운 시간 설정 저장
     setIsTimerRunning(true); // 타이머 실행 상태로 변경
   };
@@ -44,16 +45,16 @@ function App() {
       <Frame>
         <ThinFrame>
           {isTimerRunning ? (
-            <React.Fragment>
+            <TimerContainer>
               <Timer
                 mode={modes[currentMode]}
                 initialSeconds={timeSettings.find((setting) => setting.label === modes[currentMode])?.value ?? 0}
                 onTimerEnd={handleTimerEnd}
               />
-              <Phases mode={currentMode} />
-            </React.Fragment>
+              <Phases phases={modes} mode={currentMode} />
+              </TimerContainer>
           ) : (
-            <StateForm onStartTimer={startTimer} />
+            <TimerForm preTimeSettings={timeSettings} onStartTimer={startTimer} />
           )}
         </ThinFrame>
       </Frame>
@@ -69,6 +70,10 @@ const PomodoroContainer = styled.div`
   background-color: #f9f9f9;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 775px) {
+    height: auto;
+  }
 `;
 
 const TitleLine = styled.h1`
@@ -81,6 +86,14 @@ const TitleLine = styled.h1`
   top: 0px;
   margin: 20px 40px 20px 40px;
   z-index: 2;
+
+  @media (max-width: 1135px) {
+    font-size: 64px;
+  }
+
+  @media (max-width: 775px) {
+    font-size: 32px;
+  }
 
   &::before {
     content: "";
@@ -118,10 +131,18 @@ const Title = styled.h1`
   padding: 20px;
   margin: 0px 20px 0px 20px;
   z-index: 3;
+
+  @media (max-width: 1135px) {
+    font-size: 64px;
+  }
+
+  @media (max-width: 775px) {
+    font-size: 32px;
+  }
 `;
 
 const Frame = styled.div`
-   width: calc(100% - 80px - 24px);
+  width: calc(100% - 80px - 24px);
   height: calc(100% - 80px);
   border: 12px solid black;
   margin: 40px 40px 20px 40px;
@@ -136,4 +157,15 @@ const ThinFrame = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+const TimerContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 40px 56px 40px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
 `;
