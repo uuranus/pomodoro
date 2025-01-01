@@ -80,6 +80,7 @@ const TimeRow = styled.div`
 `;
 
 const TimeLabel = styled.span`
+  color:  ${(props) => props.theme.primary};
   font-size: 36px;
   font-weight: 400;
   font-family: Playfair Display, serif;
@@ -102,6 +103,7 @@ const TimeValue = styled.div`
 `;
 
 const TimeInput = styled.input`
+  color:  ${(props) => props.theme.primary};
   display: inline-block;
   text-align: end;
   width: 4ch; 
@@ -139,6 +141,7 @@ const TimeInput = styled.input`
 `;
 
 const TimeUnit = styled.span`
+  color:  ${(props) => props.theme.primary};
   font-size: 36px;
   font-weight: 400;
   font-family: Playfair Display, serif;
@@ -155,21 +158,22 @@ const TimeUnit = styled.span`
 
 const Separator = styled.hr`
   border: none;
-  border-top: 1px solid black;
+  border-top: 1px solid ${(props) => props.theme.primary};;
   margin: 0;
 `;
 
 const ButtonFrame = styled.div`
     display: inline-block; 
-    border: 6px solid black;
+    border: 6px solid ${(props) => props.theme.primary};;
     padding: 4px;
     margin-top: 60px;
 `;
 
 const StartButton = styled.button`
+  color:  ${(props) => props.theme.primary};
   padding: 10px 20px;
-  border: 1px solid black;
-  background-color: #fff;
+  border: 1px solid ${(props) => props.theme.primary};;
+  background-color: ${(props) => props.theme.background};;
   font-size: 32px;
   font-family: Playfair Display, serif;
   cursor: pointer;
@@ -184,7 +188,7 @@ const StartButton = styled.button`
   }
 
   &:hover {
-    background-color: black;
-    color: white;
+    background-color: ${(props) => props.theme.primary};;
+    color: ${(props) => props.theme.background};;
   }
 `;

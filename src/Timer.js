@@ -67,7 +67,7 @@ const TimeCountContainer = styled.div`
 
 const CurrentMode = styled.div`
   font-size: 48px;
-  color: black;
+  color:  ${(props) => props.theme.primary};;
   font-family: Playfair Display, serif;
   margin-bottom: 10px;
   display: flex;
@@ -81,11 +81,12 @@ const CurrentMode = styled.div`
 `;
 
 const TimeCount = styled.div`
+  color:  ${(props) => props.theme.primary};
   font-size: 128px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   font-family: Lora , serif;
-  border-top: 1px solid black;
+  border-top: 1px solid ${(props) => props.theme.primary};;
   text-align: baseline;
 
 

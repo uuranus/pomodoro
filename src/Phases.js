@@ -84,7 +84,7 @@ const PhasesContainer = styled.div`
 
 const PhaseTable = styled.div`
   width: 100%;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid ${(props) => props.theme.primary};
   display: grid;
   grid-template-columns: repeat(8, 1fr); 
   margin: 50px 25px 0px 25px;
@@ -107,7 +107,7 @@ const Arrow = styled.div`
 const ActiveArrow = styled.svg`
   width: 16px;
   height: 16px;
-  fill: black; 
+  fill: ${(props) => props.theme.primary}; 
 `;
 
 const Phase = styled.div`
@@ -117,7 +117,7 @@ const Phase = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: ${(props) => props.theme.primary};
   padding-bottom: 25px;
 
   @media (max-width: 1135px) {
@@ -126,7 +126,7 @@ const Phase = styled.div`
 
   @media (max-width: 775px) {
     font-size: 16px;
-    border-right: 1px solid black;
+    border-right: 1px solid  ${(props) => props.theme.primary};
   }
 `;
 
