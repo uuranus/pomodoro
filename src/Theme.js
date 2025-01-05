@@ -36,13 +36,13 @@ export default ThemeChangeCircle;
 
 const ThemeContainer = styled.div`
   display: flex;
-  justify-content: flex-end; /* 오른쪽 정렬 */
+  justify-content: flex-end;
   position: relative; 
 `;
 
 const CurrentThemeCircle = styled.div`
   height: 100%;
-  aspect-ratio:  1; /* 가로:세로 비율을 1:1로 유지 */
+  aspect-ratio:  1; 
   width: auto;
   border-radius: 50%;
   background: ${(props) =>
@@ -60,8 +60,10 @@ const ThemeList = styled.div`
   grid-template-columns: repeat(2, 1fr); 
   gap: 10px;
   margin-top: 10px;
+  padding: 10px;
   z-index:5;
-  background-color:${(props) => `${props.theme.background})`};
+  border: ${({theme}) => `1px solid ${theme.primary}` };
+  background-color: ${ ({theme}) => theme.background};
 `;
 
 // 테마 리스트의 각 아이템
