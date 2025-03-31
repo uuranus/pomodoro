@@ -80,10 +80,11 @@ const TimeRow = styled.div`
 `;
 
 const TimeLabel = styled.span`
-  color:  ${(props) => props.theme.primary};
+  color:  ${({theme}) => theme.primary};
   font-size: 36px;
   font-weight: 400;
-  font-family: Playfair Display, serif;
+  font-family: ${({theme}) => theme.typography.fontFamily.primary};
+  font-size: 36px;
 
   @media (max-width: 1135px) {
     font-size: 32px;
@@ -103,13 +104,13 @@ const TimeValue = styled.div`
 `;
 
 const TimeInput = styled.input`
-  color:  ${(props) => props.theme.primary};
+  color:  ${({theme}) => theme.primary};
   display: inline-block;
   text-align: end;
   width: 4ch; 
   font-size: 48px;
   font-weight: 500;
-  font-family: Lora Display, serif;
+  font-family: ${({theme}) => theme.typography.fontFamily.timerCount};
   border: none;
   background: none;
   appearance: textfield; 
