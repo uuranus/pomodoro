@@ -6,51 +6,50 @@ import Timer from './timer/Timer';
 import Phases from './timer/phases/Phases';
 import TimerForm from './form/Form';
 import ThemeChangeCircle from './components/ThemeChangeCircle';
+import { theme, ThemeColor } from './styles/Theme';
 
 function App() {
 
   const [currentThemeColor, setCurrentThemeColor] = useState(
-    themeColorList[0]
+    ThemeColor.BLACK
   );
-
-  const combinedTheme = { ...theme, ...currentThemeColor };
 
   const handleThemeColorChange = (newThemeColor) => {
     setCurrentThemeColor(newThemeColor);
   };
 
-  const modes = ["Focus", "Rest", "Focus", "Rest", "Focus", "Rest", "Focus", "Long Rest"];
-  const [timeSettings, setTimeSettings] = useState([
-    { label: "Focus", value: 10, unit: "min" },
-    { label: "Rest", value: 5, unit: "min" },
-    { label: "Long Rest", value: 15, unit: "min" },
-  ]);
+  // const modes = ["Focus", "Rest", "Focus", "Rest", "Focus", "Rest", "Focus", "Long Rest"];
+  // const [timeSettings, setTimeSettings] = useState([
+  //   { label: "Focus", value: 10, unit: "min" },
+  //   { label: "Rest", value: 5, unit: "min" },
+  //   { label: "Long Rest", value: 15, unit: "min" },
+  // ]);
 
-  const [currentMode, setCurrentMode] = useState(0);
+  // const [currentMode, setCurrentMode] = useState(0);
 
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  // const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const handleTimerEnd = () => {
-    setCurrentMode((prevMode) => {
-      if (prevMode + 1 < modes.length) {
-        return prevMode + 1;
-      } else {
-        console.log("Timer started with settings:", timeSettings[0]);
-        setIsTimerRunning(false);
-        return 0;
-      }
-    });
-  };
+  // const handleTimerEnd = () => {
+  //   setCurrentMode((prevMode) => {
+  //     if (prevMode + 1 < modes.length) {
+  //       return prevMode + 1;
+  //     } else {
+  //       console.log("Timer started with settings:", timeSettings[0]);
+  //       setIsTimerRunning(false);
+  //       return 0;
+  //     }
+  //   });
+  // };
 
-  const startTimer = (timeSettings) => {
-    setTimeSettings(timeSettings);
-    setIsTimerRunning(true);
-  };
+  // const startTimer = (timeSettings) => {
+  //   setTimeSettings(timeSettings);
+  //   setIsTimerRunning(true);
+  // };
 
   return (
 
-    <ThemeProvider theme={combinedTheme}>
-      <Body>
+    <ThemeProvider theme={theme[currentThemeColor]}>
+      {/* <Body>
         <ColorContainer>
           <ThemeChangeCircle currentTheme={currentThemeColor} themeColorList={themeColorList} onThemeColorChange={handleThemeColorChange} />
         </ColorContainer>
@@ -79,8 +78,8 @@ function App() {
 
         <Footer>
           @uuranus_dev
-        </Footer>
-      </Body>
+        </Footer> */}
+      {/* </Body> */}
     </ThemeProvider>
   );
 }
