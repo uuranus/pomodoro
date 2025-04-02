@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme, ThemeColor } from "./styles/theme.js";
 import { labelSmall } from "./styles/typography.js";
@@ -11,6 +11,13 @@ import { FormPage } from "./pages/form/formPage.js";
 // import TimerForm from "./form/Form";
 // import ThemeChangeCircle from "./components/ThemeChangeCircle";
 // import { theme, ThemeColor } from "./styles/Theme";
+
+const ThemeContext = createContext({
+  currentThemeColor: ThemeColor.BLACK,
+  setCurrentThemeColor: (color) => {},
+});
+
+export const useThemeColor = () => useContext(ThemeContext);
 
 function App() {
   const [currentThemeColor, setCurrentThemeColor] = useState(ThemeColor.BLACK);
@@ -30,7 +37,6 @@ function App() {
 
   // const [currentMode, setCurrentMode] = useState(0);
 
-
   // const handleTimerEnd = () => {
   //   setCurrentMode((prevMode) => {
   //     if (prevMode + 1 < modes.length) {
@@ -49,19 +55,21 @@ function App() {
   // };
 
   return (
-    <ThemeProvider theme={theme[currentThemeColor]}>
-      <MainContainer>
-        <MainFrame>
-          <SubMainFrame>
-
-              {isTimerRunning ? <TimerPage></TimerPage> : <FormPage></FormPage> }
-
-          </SubMainFrame>
-        </MainFrame>
-        <Footer>@uuranus_dev</Footer>
-      </MainContainer>
-
-      {/* <Body>
+    <ThemeContext.Provider value={{ currentThemeColor, setCurrentThemeColor }}>
+      <ThemeProvider theme={theme[currentThemeColor]}>
+        <MainContainer>
+          <MainFrame>
+            <SubMainFrame>
+              {isTimerRunning ? <TimerPage></TimerPage> : <FormPage></FormPage>}
+            </SubMainFrame>
+          </MainFrame>
+          <Footer>@uuranus_dev</Footer>
+        </MainContainer>
+      </ThemeProvider>
+    </ThemeContext.Provider>
+  );
+}
+/* <Body>
         <ColorContainer>
           <ThemeChangeCircle currentTheme={currentThemeColor} themeColorList={themeColorList} onThemeColorChange={handleThemeColorChange} />
         </ColorContainer>
@@ -90,11 +98,8 @@ function App() {
 
         <Footer>
           @uuranus_dev
-        </Footer> */}
-      {/* </Body> */}
-    </ThemeProvider>
-  );
-}
+        </Footer> */
+/* </Body> */
 
 export default App;
 
@@ -123,6 +128,7 @@ const SubMainFrame = styled.div`
 const Footer = styled(labelSmall)`
   display: flex;
   justify-content: flex-end;
+  color: ${({ theme }) => theme.onBackground};
 `;
 
 // const Body = styled.div`
