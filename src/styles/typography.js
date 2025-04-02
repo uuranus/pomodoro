@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { desktopMinWidth, tabletMinWidth } from "./Theme";
+import { desktopMinWidth, tabletMinWidth } from "./theme";
 
 export const displayLarge = styled.div`
   font-family: "Playfair Display", sans-serif;
