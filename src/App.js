@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme, ThemeColor } from "./styles/theme.js";
 import { labelSmall } from "./styles/typography.js";
+import { TimerPage } from "./pages/timer/timerPage.js";
+import { FormPage } from "./pages/form/formPage.js";
 
 // import Timer from "./timer/Timer";
 // import Phases from "./timer/phases/Phases";
@@ -17,6 +19,8 @@ function App() {
     setCurrentThemeColor(newThemeColor);
   };
 
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
+
   // const modes = ["Focus", "Rest", "Focus", "Rest", "Focus", "Rest", "Focus", "Long Rest"];
   // const [timeSettings, setTimeSettings] = useState([
   //   { label: "Focus", value: 10, unit: "min" },
@@ -26,7 +30,6 @@ function App() {
 
   // const [currentMode, setCurrentMode] = useState(0);
 
-  // const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   // const handleTimerEnd = () => {
   //   setCurrentMode((prevMode) => {
@@ -49,7 +52,11 @@ function App() {
     <ThemeProvider theme={theme[currentThemeColor]}>
       <MainContainer>
         <MainFrame>
-          <SubMainFrame></SubMainFrame>
+          <SubMainFrame>
+
+              {isTimerRunning ? <TimerPage></TimerPage> : <FormPage></FormPage> }
+
+          </SubMainFrame>
         </MainFrame>
         <Footer>@uuranus_dev</Footer>
       </MainContainer>

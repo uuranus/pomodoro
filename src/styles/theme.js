@@ -18,7 +18,7 @@ export const theme = {
     background: "#FFFFFF",
     onBackground: "#222222",
     surface: "#222222",
-    onSurface: "#222222",
+    onSurface: "#FFFFFF",
     scale: {
       100: "#000000",
       90: "#111111",
