@@ -5,7 +5,7 @@ export const displayLarge = styled.div`
   font-family: "Playfair Display", sans-serif;
   font-weight: 400;
   line-height: 150%;
-  font-size: 32px;
+  font-size: 48px;
 
   @media (min-width: ${tabletMinWidth}) {
     font-size: 64px;
@@ -215,7 +215,7 @@ export const mono_displayLarge = styled.div`
   font-family: "Lora", sans-serif;
   font-weight: 400;
   line-height: 150%;
-  font-size: 32px;
+  font-size: 48px;
 
   @media (min-width: ${tabletMinWidth}) {
     font-size: 64px;

@@ -104,7 +104,7 @@ function App() {
 export default App;
 
 const MainContainer = styled.div`
-  height: 100%;
+  min-height: 100%;
   padding: 16px;
   box-sizing: border-box;
   background-color: pink;
@@ -128,7 +128,7 @@ const SubMainFrame = styled.div`
 const Footer = styled(labelSmall)`
   display: flex;
   justify-content: flex-end;
-  color: ${({ theme }) => theme.onBackground};
+  color: ${({theme}) => theme.onBackground};
 `;
 
 // const Body = styled.div`
