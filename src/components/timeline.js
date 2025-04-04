@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { bodyLarge, titleSmall } from "../styles/typography";
 
-export const TimeLine = ({ text, minutes, isActive }) => {
+export const TimeLine = ({ text, minutes, isActive, onClick }) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       {isActive ? (
         <>
           <ActiveText>{text}</ActiveText>

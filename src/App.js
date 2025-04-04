@@ -11,28 +11,9 @@ import { defaultTimerSettings, TimerContext } from "./pages/timerContext.js";
 function App() {
   const [currentThemeColor, setCurrentThemeColor] = useState(ThemeColor.BLACK);
 
-  const [isTimerRunning, setIsTimerRunning] = useState(true);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   const [currentTimerSetting, setTimerSetting] = useState(defaultTimerSettings);
-
-  // const [currentMode, setCurrentMode] = useState(0);
-
-  // const handleTimerEnd = () => {
-  //   setCurrentMode((prevMode) => {
-  //     if (prevMode + 1 < modes.length) {
-  //       return prevMode + 1;
-  //     } else {
-  //       console.log("Timer started with settings:", timeSettings[0]);
-  //       setIsTimerRunning(false);
-  //       return 0;
-  //     }
-  //   });
-  // };
-
-  // const startTimer = (timeSettings) => {
-  //   setTimeSettings(timeSettings);
-  //   setIsTimerRunning(true);
-  // };
 
   return (
     <ThemeContext.Provider value={{ currentThemeColor, setCurrentThemeColor }}>
