@@ -1,5 +1,1 @@
-
-
-export const FormPage = () => {
-
-}
+export const FormPage = ({ onStart }) => {};

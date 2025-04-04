@@ -214,6 +214,7 @@ export const bodySmall = styled.div`
 export const mono_displayLarge = styled.div`
   font-family: "Lora", sans-serif;
   font-weight: 400;
+  font-variant-numeric: tabular-nums;
   line-height: 150%;
   font-size: 48px;
 
@@ -228,6 +229,7 @@ export const mono_displayLarge = styled.div`
 
 export const mono_displayMedium = styled.div`
   font-family: "Lora", sans-serif;
+  font-variant-numeric: tabular-nums;
   font-weight: 500;
   line-height: 150%;
   font-size: 24px;

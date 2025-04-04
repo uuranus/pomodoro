@@ -1,12 +1,22 @@
 import styled from "styled-components";
-import { bodyLarge } from "../styles/typography";
+import { bodyLarge, titleSmall } from "../styles/typography";
 
 export const TimeLine = ({ text, minutes, isActive }) => {
   return (
     <Container>
-      <Text>{text}</Text>
-      <ConntectingLine />
-      <MinuteText>{minutes} min</MinuteText>
+      {isActive ? (
+        <>
+          <ActiveText>{text}</ActiveText>
+          <ActiveConntectingLine />
+          <ActiveMinuteText>{minutes} min</ActiveMinuteText>
+        </>
+      ) : (
+        <>
+          <Text>{text}</Text>
+          <ConntectingLine />
+          <MinuteText>{minutes} min</MinuteText>
+        </>
+      )}
     </Container>
   );
 };
@@ -16,6 +26,19 @@ const Container = styled.div`
   gap: 8px;
   justify-content: center;
   align-items: flex-end;
+`;
+
+const ActiveText = styled(titleSmall)`
+  color: ${({ theme }) => theme.onBackground};
+`;
+
+const ActiveConntectingLine = styled.div`
+  flex: 1;
+  border-bottom: 2px dashed ${({ theme }) => theme.onBackground};
+`;
+
+const ActiveMinuteText = styled(titleSmall)`
+  color: ${({ theme }) => theme.onBackground};
 `;
 
 const Text = styled(bodyLarge)`

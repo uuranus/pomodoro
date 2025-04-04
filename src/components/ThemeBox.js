@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { desktopMinWidth, tabletMinWidth, ThemeColor } from "../styles/theme";
 import { Headline } from "./headline";
 import { bodyLarge } from "../styles/typography";
-import { useThemeColor } from "../App";
 import { useCallback } from "react";
 import React from "react";
+import { useThemeColor } from "../styles/themeContext";
 
 export const ThemeBox = () => {
   const { currentThemeColor, setCurrentThemeColor } = useThemeColor();
@@ -14,8 +14,6 @@ export const ThemeBox = () => {
 
     setCurrentThemeColor(color);
   }, []);
-
-  // console.log(`isCurrentTheme ${currentThemeColor === ThemeColor.BLACK}`);
 
   return (
     <Container>
