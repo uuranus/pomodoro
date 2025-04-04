@@ -8,7 +8,6 @@ import { FormPage } from "./pages/form/formPage.js";
 import { ThemeContext } from "./styles/themeContext.js";
 import { defaultTimerSettings, TimerContext } from "./pages/timerContext.js";
 
-
 function App() {
   const [currentThemeColor, setCurrentThemeColor] = useState(ThemeColor.BLACK);
 
@@ -37,17 +36,23 @@ function App() {
 
   return (
     <ThemeContext.Provider value={{ currentThemeColor, setCurrentThemeColor }}>
-      <TimerContext.Provider value = {{ timerSetting: currentTimerSetting, setTimerSetting}}>
-      <ThemeProvider theme={theme[currentThemeColor]}>
-        <MainContainer>
-          <MainFrame>
-            <SubMainFrame>
-              {isTimerRunning ? <TimerPage></TimerPage> : <FormPage onStart = {() => setIsTimerRunning(true)}></FormPage>}
-            </SubMainFrame>
-          </MainFrame>
-          <Footer>@uuranus_dev</Footer>
-        </MainContainer>
-      </ThemeProvider>
+      <TimerContext.Provider
+        value={{ timerSetting: currentTimerSetting, setTimerSetting }}
+      >
+        <ThemeProvider theme={theme[currentThemeColor]}>
+          <MainContainer>
+            <MainFrame>
+              <SubMainFrame>
+                {isTimerRunning ? (
+                  <TimerPage onPomodoroEnd={() => setIsTimerRunning(false)} />
+                ) : (
+                  <FormPage onStart={() => setIsTimerRunning(true)}></FormPage>
+                )}
+              </SubMainFrame>
+            </MainFrame>
+            <Footer>@uuranus_dev</Footer>
+          </MainContainer>
+        </ThemeProvider>
       </TimerContext.Provider>
     </ThemeContext.Provider>
   );
@@ -58,7 +63,7 @@ export default App;
 const MainContainer = styled.div`
   min-height: 100%;
   padding: 16px;
-  background-color: ${({theme}) => theme.background};
+  background-color: ${({ theme }) => theme.background};
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

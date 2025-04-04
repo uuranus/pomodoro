@@ -1,6 +1,4 @@
 export const getMinuteString = (seconds) => {
-    console.log(`seconds ${seconds}`);
-
   let minute = Math.floor(seconds / 60);
   let second = seconds % 60;
 

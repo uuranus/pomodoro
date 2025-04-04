@@ -17,50 +17,101 @@ const useWindowWidth = () => {
   return width;
 };
 
-export const TimerPage = () => {
+const mode = [
+  "Focus",
+  "Break",
+  "Focus",
+  "Break",
+  "Focus",
+  "Break",
+  "Focus",
+  "Long Break",
+];
+
+export const TimerPage = ({ onPomodoroEnd }) => {
   const width = useWindowWidth();
   const isDesktop = width >= desktopMinWidth.replace("px", "");
 
   const { timerSetting } = useTimer();
 
-  const mode = [
-    "Focus",
-    "Break",
-    "Focus",
-    "Break",
-    "Focus",
-    "Break",
-    "Focus",
-    "Long Break",
-  ];
-
   const [currentMode, setCurrentMode] = useState(0);
 
-  const getModeMinutes = useCallback((mode) => {
-    if (mode === "Focus") {
-      return timerSetting.focus;
-    } else if (mode === "Break") {
-      return timerSetting.break;
-    } else {
-      return timerSetting.longBreak;
-    }
-  }, []);
+  const getModeMinutes = useCallback(
+    (mode) => {
+      if (mode === "Focus") {
+        return timerSetting.focus;
+      } else if (mode === "Break") {
+        return timerSetting.break;
+      } else {
+        return timerSetting.longBreak;
+      }
+    },
+    [timerSetting]
+  );
 
   const [restTimeSeconds, setRestTimeSeconds] = useState(
-    getModeMinutes(mode[currentMode]) * 60
+    getModeMinutes(mode[currentMode])
   );
 
   useEffect(() => {
+    if (currentMode === mode.length) {
+      onPomodoroEnd();
+      return;
+    }
+
+    const newRestTime = getModeMinutes(mode[currentMode]);
+
+    setRestTimeSeconds(newRestTime);
+  }, [currentMode]);
+
+  useEffect(() => {
     const updateTimer = setInterval(() => {
-      setRestTimeSeconds((r) => r - 1);
+      setRestTimeSeconds((r) => {
+        if (r === 1) {
+          clearInterval(updateTimer);
+          setCurrentMode(currentMode + 1);
+          return 0;
+        } else {
+          return r - 1;
+        }
+      });
     }, 1000);
 
     return () => {
       clearInterval(updateTimer);
     };
-  }, []);
+  }, [currentMode, restTimeSeconds]);
 
-  return !isDesktop ? (
+  return isDesktop ? (
+    <S.DesktopContainer>
+      <S.DesktopColumnBox>
+        <S.DesktopLeftColumn>
+          <S.TimerBox>
+            <Headline>Pomodoro Timer</Headline>
+            <S.TimerContent>
+              <S.TimerText>{getMinuteString(restTimeSeconds)}</S.TimerText>
+              <S.ModeText>{mode[currentMode]}</S.ModeText>
+            </S.TimerContent>
+          </S.TimerBox>
+          <ThemeBox />
+        </S.DesktopLeftColumn>
+        <S.DesktopRightColumn>
+          <S.TimeLineBox>
+            <Headline>TimeLine</Headline>
+            <S.TimeLineContent>
+              {mode.map((m, index) => (
+                <TimeLine
+                  text={m}
+                  minutes={getModeMinutes(m)}
+                  isActive={index === currentMode}
+                />
+              ))}
+            </S.TimeLineContent>
+          </S.TimeLineBox>
+        </S.DesktopRightColumn>
+      </S.DesktopColumnBox>
+    </S.DesktopContainer>
+  ) : (
     <S.Container>
       <S.TimerBox>
         <Headline>Pomodoro Timer</Headline>
@@ -84,30 +135,5 @@ export const TimerPage = () => {
       </S.TimeLineBox>
       <ThemeBox />
     </S.Container>
-  ) : (
-    <S.DesktopContainer>
-      <S.DesktopColumnBox>
-        <S.DesktopLeftColumn>
-          <S.TimerBox>
-            <Headline>Pomodoro Timer</Headline>
-            <S.TimerContent>
-              <S.TimerText>16:35</S.TimerText>
-              <S.ModeText>{mode[currentMode]}</S.ModeText>
-            </S.TimerContent>
-          </S.TimerBox>
-          <ThemeBox />
-        </S.DesktopLeftColumn>
-        <S.DesktopRightColumn>
-          <S.TimeLineBox>
-            <Headline>TimeLine</Headline>
-            <S.TimeLineContent>
-              {mode.map((m) => (
-                <TimeLine text={m} minutes={getModeMinutes(m)} />
-              ))}
-            </S.TimeLineContent>
-          </S.TimeLineBox>
-        </S.DesktopRightColumn>
-      </S.DesktopColumnBox>
-    </S.DesktopContainer>
   );
 };
