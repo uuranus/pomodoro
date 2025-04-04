@@ -4,6 +4,14 @@ import { displayMedium, mono_displayLarge } from "../../styles/typography";
 
 export const Container = styled.div`
   padding: 32px;
+
+  @media(min-width: ${tabletMinWidth}){
+    padding: 64px;
+  }
+
+  @media(min-width: ${desktopMinWidth}){
+    padding: 72px;
+  }
 `;
 
 export const TimerBox = styled.div``;

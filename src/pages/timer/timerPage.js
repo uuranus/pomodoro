@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { Headline } from "../../components/headline.js";
 import { ThemeBox } from "../../components/ThemeBox.js";
 import { TimeLine } from "../../components/timeline.js";
 import * as S from "./styles.js";
 import { desktopMinWidth } from "../../styles/theme.js";
-import { useTimer } from "../timerContext.js";
-import { getMinuteString } from "../../util/time.js";
+import { getMinuteString, useTimerSetting } from "../../util/time.js";
 
 const useWindowWidth = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -32,22 +31,9 @@ export const TimerPage = ({ onPomodoroEnd }) => {
   const width = useWindowWidth();
   const isDesktop = width >= desktopMinWidth.replace("px", "");
 
-  const { timerSetting } = useTimer();
-
   const [currentMode, setCurrentMode] = useState(0);
 
-  const getModeMinutes = useCallback(
-    (mode) => {
-      if (mode === "Focus") {
-        return timerSetting.focus;
-      } else if (mode === "Break") {
-        return timerSetting.break;
-      } else {
-        return timerSetting.longBreak;
-      }
-    },
-    [timerSetting]
-  );
+  const { getModeMinutes } = useTimerSetting();
 
   const [restTimeSeconds, setRestTimeSeconds] = useState(
     getModeMinutes(mode[currentMode])
