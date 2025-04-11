@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { bodyLarge, titleSmall } from "../styles/typography";
 
 export const TimeLine = ({ text, minutes, isActive, onClick }) => {
+  const clickable = typeof onClick === 'function';
+
   return (
     <Container onClick={onClick}>
       {isActive ? (
@@ -14,7 +16,7 @@ export const TimeLine = ({ text, minutes, isActive, onClick }) => {
         <>
           <Text>{text}</Text>
           <ConntectingLine />
-          <MinuteText>{minutes} min</MinuteText>
+          <MinuteText isClickable = {clickable}>{minutes} min</MinuteText>
         </>
       )}
     </Container>
@@ -52,4 +54,5 @@ const ConntectingLine = styled.div`
 
 const MinuteText = styled(bodyLarge)`
   color: ${({ theme }) => theme.onBackground};
+  cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
 `;

@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { desktopMinWidth, tabletMinWidth, ThemeColor } from "../styles/theme";
+import {
+  desktopMinWidth,
+  getThemeKey,
+  isReverse,
+  tabletMinWidth,
+  ThemeColor,
+} from "../styles/theme";
 import { Headline } from "./headline";
 import { bodyLarge } from "../styles/typography";
 import { useCallback } from "react";
@@ -9,42 +15,49 @@ import { useThemeColor } from "../styles/themeContext";
 export const ThemeBox = () => {
   const { currentThemeColor, setCurrentThemeColor } = useThemeColor();
 
-  const changeTheme = useCallback((color) => {
-    if (currentThemeColor === color) return;
+  const changeTheme = useCallback(
+    (color) => {
+      if (getThemeKey(currentThemeColor) === color) return;
 
-    setCurrentThemeColor(color);
-  }, []);
+      const newThemeKey = isReverse(currentThemeColor)
+        ? `${color}_reverse`
+        : color;
+
+      setCurrentThemeColor(newThemeKey);
+    },
+    [currentThemeColor]
+  );
 
   return (
     <Container>
       <Headline>Theme</Headline>
       <ThemeColorWrapper>
         <Text
-          isCurrentTheme={currentThemeColor === ThemeColor.BLACK}
+          isCurrentTheme={getThemeKey(currentThemeColor) === ThemeColor.BLACK}
           onClick={() => changeTheme(ThemeColor.BLACK)}
         >
           Black
         </Text>
         <Text
-          isCurrentTheme={currentThemeColor === ThemeColor.RED}
+          isCurrentTheme={getThemeKey(currentThemeColor) === ThemeColor.RED}
           onClick={() => changeTheme(ThemeColor.RED)}
         >
           Red
         </Text>
         <Text
-          isCurrentTheme={currentThemeColor === ThemeColor.GREEN}
+          isCurrentTheme={getThemeKey(currentThemeColor) === ThemeColor.GREEN}
           onClick={() => changeTheme(ThemeColor.GREEN)}
         >
           Green
         </Text>
         <Text
-          isCurrentTheme={currentThemeColor === ThemeColor.YELLOW}
+          isCurrentTheme={getThemeKey(currentThemeColor) === ThemeColor.YELLOW}
           onClick={() => changeTheme(ThemeColor.YELLOW)}
         >
           Yellow
         </Text>
         <Text
-          isCurrentTheme={currentThemeColor === ThemeColor.BLUE}
+          isCurrentTheme={getThemeKey(currentThemeColor) === ThemeColor.BLUE}
           onClick={() => changeTheme(ThemeColor.BLUE)}
         >
           Blue

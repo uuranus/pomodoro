@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "../../components/button.js";
 import { Headline } from "../../components/headline.js";
 import { ThemeBox } from "../../components/ThemeBox.js";
@@ -16,14 +16,10 @@ export const FormPage = ({ onStart }) => {
   const [showDialog, setShowDialog] = useState(false);
   const currentMode = useRef(null);
 
-  useEffect(() => {
-    console.log("timerSetting", timerSetting);
-  }, [timerSetting]);
-
   return (
     <S.Container>
       <S.TimerBox>
-        <Headline>Pomodoro Timer</Headline>
+        <Headline key="Timer">Pomodoro Timer</Headline>
         <S.TimeLineContent>
           {mode.map((m) => (
             <TimeLine
@@ -44,7 +40,6 @@ export const FormPage = ({ onStart }) => {
           mode={currentMode.current}
           minutes={getModeMinutes(currentMode.current, timerSetting)}
           onDismiss={(newMinute) => {
-            console.log(newMinute);
             setTimerSetting((prev) => ({
               ...prev,
               [getModeName(currentMode.current)]: newMinute,

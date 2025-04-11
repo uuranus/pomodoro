@@ -84,6 +84,7 @@ const ThinFrame = styled.div`
 `;
 
 const Title = styled(headlineMedium)`
+  color: ${({ theme }) => theme.onBackground};
   margin-bottom: 4px;
 `;
 

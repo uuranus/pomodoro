@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { theme, ThemeColor } from "./styles/theme.js";
+import { reverseTheme, theme, ThemeColor } from "./styles/theme.js";
 import { labelSmall } from "./styles/typography.js";
 import { TimerPage } from "./pages/timer/timerPage.js";
 import { FormPage } from "./pages/form/formPage.js";
@@ -15,24 +15,26 @@ function App() {
 
   const [currentTimerSetting, setTimerSetting] = useState(defaultTimerSettings);
 
+  const getTheme = (key) => {
+    const isReverse = key.includes("reverse");
+    const themeKey = key.replace("_reverse", "");
+
+    return isReverse ? reverseTheme[themeKey] : theme[themeKey];
+  };
+
   return (
     <ThemeContext.Provider value={{ currentThemeColor, setCurrentThemeColor }}>
       <TimerContext.Provider
         value={{ timerSetting: currentTimerSetting, setTimerSetting }}
       >
-        <ThemeProvider theme={theme[currentThemeColor]}>
+        <ThemeProvider theme={getTheme(currentThemeColor)}>
           <MainContainer>
             <MainFrame>
               <SubMainFrame>
                 {isTimerRunning ? (
                   <TimerPage onPomodoroEnd={() => setIsTimerRunning(false)} />
                 ) : (
-                  <FormPage
-                    onStart={() => {
-                      console.log("!!!!");
-                      setIsTimerRunning(true);
-                    }}
-                  />
+                  <FormPage onStart={() => setIsTimerRunning(true)} />
                 )}
               </SubMainFrame>
             </MainFrame>
