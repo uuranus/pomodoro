@@ -1,6 +1,3 @@
-import { useCallback } from "react";
-import { useTimer } from "../pages/timerContext";
-
 export const getMinuteString = (seconds) => {
   let minute = Math.floor(seconds / 60);
   let second = seconds % 60;
@@ -11,17 +8,14 @@ export const getMinuteString = (seconds) => {
   return `${paddedMinute}:${paddedSecond}`;
 };
 
-export const useTimerSetting = () => {
-  const { timerSetting } = useTimer();
+export const getModeMinutes = (mode, timerSetting) => {
+  if (mode === "Focus") return timerSetting.focus;
+  if (mode === "Break") return timerSetting.break;
+  return timerSetting.longBreak;
+};
 
-  const getModeMinutes = useCallback(
-    (mode) => {
-      if (mode === "Focus") return timerSetting.focus;
-      if (mode === "Break") return timerSetting.break;
-      return timerSetting.longBreak;
-    },
-    [timerSetting]
-  );
-
-  return { getModeMinutes };
+export const getModeName = (mode) => {
+  if (mode === "Focus") return "focus";
+  if (mode === "Break") return "break";
+  return 'longBreak';
 };

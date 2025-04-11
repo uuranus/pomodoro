@@ -1,28 +1,44 @@
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { headlineMedium } from "../styles/typography";
+import { headlineMedium, mono_headlineMedium } from "../styles/typography";
 import { useState } from "react";
-import minus from "../../public/minus.png";
-import plus from "../../public/plus.png";
+import minus from "../assets/minus.png";
+import plus from "../assets/plus.png";
 
-export const Dialog = ({ mode, minute, onDismiss }) => {
-  const [currentMinute, setCurrentMode] = useState(minute);
+export const Dialog = ({ mode, minutes, onDismiss }) => {
+  const [currentMinute, setCurrentMinutes] = useState(minutes);
 
-  console.log("dialog!!", minute);
   return createPortal(
-    <DialogOverlay onClick={() => onDismiss(currentMinute)}>
+    <DialogOverlay
+      onClick={() => {
+        onDismiss(currentMinute);
+      }}
+    >
       <Container>
         <MainFrame>
           <ThinFrame>
             <Title>{mode}</Title>
             <NumberPicker>
-              <VolumeButton>
+              <VolumeButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentMinutes((m) => {
+                    if (m === 0) return m;
+                    return m - 1;
+                  });
+                }}
+              >
                 <img src={minus} alt="minus" />
               </VolumeButton>
               <NumberPickerText>{currentMinute}</NumberPickerText>
 
-              <VolumeButton>
-                <img src="/public/plus.png" alt="plus" />
+              <VolumeButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentMinutes((m) => m + 1);
+                }}
+              >
+                <img src={plus} alt="plus" />
               </VolumeButton>
             </NumberPicker>
           </ThinFrame>
@@ -75,6 +91,8 @@ const NumberPicker = styled.div`
   padding-top: 8px;
   border-top: 1px dashed ${({ theme }) => theme.onBackground};
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 32px;
 `;
 
@@ -83,7 +101,10 @@ const VolumeButton = styled.div`
   border-radius: 50%;
   width: 30px;
   height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
-const NumberPickerText = styled(headlineMedium)`
+const NumberPickerText = styled(mono_headlineMedium)`
   color: ${({ theme }) => theme.onBackground};
 `;

@@ -1,10 +1,11 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Headline } from "../../components/headline.js";
 import { ThemeBox } from "../../components/ThemeBox.js";
 import { TimeLine } from "../../components/timeline.js";
 import * as S from "./styles.js";
 import { desktopMinWidth } from "../../styles/theme.js";
-import { getMinuteString, useTimerSetting } from "../../util/time.js";
+import { getMinuteString, getModeMinutes } from "../../util/time.js";
+import { useTimer } from "../timerContext.js";
 
 const useWindowWidth = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -33,10 +34,10 @@ export const TimerPage = ({ onPomodoroEnd }) => {
 
   const [currentMode, setCurrentMode] = useState(0);
 
-  const { getModeMinutes } = useTimerSetting();
+  const { timerSetting } = useTimer();
 
   const [restTimeSeconds, setRestTimeSeconds] = useState(
-    getModeMinutes(mode[currentMode])
+    getModeMinutes(mode[currentMode], timerSetting)
   );
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export const TimerPage = ({ onPomodoroEnd }) => {
       return;
     }
 
-    const newRestTime = getModeMinutes(mode[currentMode]);
+    const newRestTime = getModeMinutes(mode[currentMode], timerSetting);
 
     setRestTimeSeconds(newRestTime);
   }, [currentMode]);
@@ -88,7 +89,7 @@ export const TimerPage = ({ onPomodoroEnd }) => {
               {mode.map((m, index) => (
                 <TimeLine
                   text={m}
-                  minutes={getModeMinutes(m)}
+                  minutes={getModeMinutes(m, timerSetting)}
                   isActive={index === currentMode}
                 />
               ))}
@@ -113,7 +114,7 @@ export const TimerPage = ({ onPomodoroEnd }) => {
           {mode.map((m, index) => (
             <TimeLine
               text={m}
-              minutes={getModeMinutes(m)}
+              minutes={getModeMinutes(m, timerSetting)}
               isActive={index === currentMode}
             />
           ))}

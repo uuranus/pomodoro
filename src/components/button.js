@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { headlineMedium } from "../styles/typography";
 
-export const Button = ({ children }) => {
+export const Button = ({ children , onClick}) => {
   return (
-    <MainFrame>
+    <MainFrame onClick = {onClick}>
       <ThinFrame>
         <Text>{children}</Text>
       </ThinFrame>

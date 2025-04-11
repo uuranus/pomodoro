@@ -27,7 +27,12 @@ function App() {
                 {isTimerRunning ? (
                   <TimerPage onPomodoroEnd={() => setIsTimerRunning(false)} />
                 ) : (
-                  <FormPage onStart={() => setIsTimerRunning(true)}></FormPage>
+                  <FormPage
+                    onStart={() => {
+                      console.log("!!!!");
+                      setIsTimerRunning(true);
+                    }}
+                  />
                 )}
               </SubMainFrame>
             </MainFrame>

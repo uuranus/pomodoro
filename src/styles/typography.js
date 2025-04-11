@@ -260,6 +260,7 @@ export const mono_headlineLarge = styled.div`
 
 export const mono_headlineMedium = styled.div`
   font-family: "Lora", sans-serif;
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
   line-height: 150%;
   font-size: 20px;
